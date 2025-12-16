@@ -1,6 +1,6 @@
 # therealteejay25/Docr
 
-docs: Created README.md with project overview
+docs: Updated documentation based on recent changes
 
 ## About
 
