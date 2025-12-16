@@ -1,6 +1,6 @@
 # therealteejay25/Docr
 
-rkorc
+docs: Updated documentation based on recent changes
 
 ## About
 
