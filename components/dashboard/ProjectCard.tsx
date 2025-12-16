@@ -38,7 +38,9 @@ export function ProjectCard({ repo, index }: ProjectCardProps) {
         </div>
         <div className="flex items-center gap-2 text-gray-400 text-sm">
           <Lightbulb size={16} />
-          <span>{repo.language || "Unknown"} • {repo.size || 0} KB</span>
+          <span>
+            {repo.language || "Unknown"} • {repo.size || 0} KB
+          </span>
         </div>
       </div>
 
@@ -57,4 +59,3 @@ export function ProjectCard({ repo, index }: ProjectCardProps) {
     </motion.div>
   );
 }
-
