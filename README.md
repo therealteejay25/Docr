@@ -1,6 +1,6 @@
 # therealteejay25/Docr
 
-ekdcosx
+docs: Updated documentation based on recent changes
 
 ## About
 
