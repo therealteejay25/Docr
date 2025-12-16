@@ -1,6 +1,6 @@
 # therealteejay25/Docr
 
-docs: Repaired truncated JSON and provided a minimal README patch.
+docs: Updated documentation based on recent changes
 
 ## About
 
