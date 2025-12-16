@@ -1,11 +1,11 @@
-# therealteejay25/Docr
+# docr
 
-docs: Updated documentation based on recent changes
+docr
 
-## About
+## Installation
 
-This project was documented by Docr.
+## Usage
 
-## Getting Started
+## Features
 
-See the main branch for usage instructions.
+## Contributing
