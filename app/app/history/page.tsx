@@ -53,8 +53,8 @@ export default function HistoryPage() {
 
   const filteredJobs = jobs.filter(
     (job) =>
-      job.repoName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.jobType.toLowerCase().includes(searchTerm.toLowerCase())
+      (job.repoName?.toLowerCase() ?? "").includes(searchTerm.toLowerCase()) ||
+      (job.jobType?.toLowerCase() ?? "").includes(searchTerm.toLowerCase())
   );
 
   const getStatusIcon = (status: string) => {

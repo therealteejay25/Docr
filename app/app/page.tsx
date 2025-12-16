@@ -27,6 +27,11 @@ export default function DashboardPage() {
   });
   const [recentJobs, setRecentJobs] = useState([]);
   const [statsLoading, setStatsLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     fetchRepos();
@@ -77,6 +82,9 @@ export default function DashboardPage() {
       statusStyles[status as keyof typeof statusStyles] || statusStyles.pending
     );
   };
+
+  // Use a placeholder for SSR to avoid hydration mismatch
+  const displayBalance = mounted ? balance : 0;
 
   return (
     <div className="flex-1 p-8 overflow-y-auto">
@@ -148,7 +156,7 @@ export default function DashboardPage() {
               </p>
               <Rocket size={24} className="text-yellow-400" />
             </div>
-            <p className="text-4xl font-bold text-white">{balance}</p>
+            <p className="text-4xl font-bold text-white">{displayBalance}</p>
             <p className="text-xs text-white/50 mt-2">Available credits</p>
           </div>
         </motion.div>
@@ -201,7 +209,7 @@ export default function DashboardPage() {
                     <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0" />
                     <div className="min-w-0">
                       <p className="text-sm text-white font-medium truncate">
-                        {job.jobType.replace(/_/g, " ")}
+                        {(job.jobType || "Job").replace(/_/g, " ")}
                       </p>
                       <p className="text-xs text-white/50">
                         {new Date(job.createdAt).toLocaleDateString("en-US", {
