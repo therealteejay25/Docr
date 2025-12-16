@@ -13,7 +13,7 @@ import {
 } from "@phosphor-icons/react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
-import { authApi } from "@/lib/api-client";
+import { authApi, usersApi } from "@/lib/api-client";
 
 interface UserSettings {
   emailNotifications: boolean;
@@ -42,16 +42,8 @@ export default function SettingsPage() {
     try {
       setLoading(true);
       // Fetch actual user settings from backend
-      const response = await fetch("/api/v1/users/settings", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setSettings(data.settings || settings);
-      }
+      const data = await usersApi.getSettings();
+      setSettings(data.settings || settings);
     } catch (error) {
       console.error("Failed to load settings:", error);
     } finally {
@@ -69,14 +61,7 @@ export default function SettingsPage() {
     // Save to backend
     try {
       setSaving(true);
-      await fetch("/api/v1/users/settings", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: JSON.stringify({ settings: newSettings }),
-      });
+      await usersApi.updateSettings(newSettings);
     } catch (error) {
       console.error("Failed to save settings:", error);
       // Revert on error

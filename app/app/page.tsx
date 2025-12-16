@@ -106,7 +106,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-base border border-white/10 rounded-2xl p-6 overflow-hidden relative group"
+          className="bg-base border-2 border-white/2 rounded-2xl p-6 overflow-hidden relative group"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="relative z-10">
@@ -125,7 +125,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-base border border-white/10 rounded-2xl p-6 overflow-hidden relative group"
+          className="bg-base border-2 border-white/2 rounded-2xl p-6 overflow-hidden relative group"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="relative z-10">
@@ -146,7 +146,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-base border border-white/10 rounded-2xl p-6 overflow-hidden relative group"
+          className="bg-base border-2 border-white/2 rounded-2xl p-6 overflow-hidden relative group"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="relative z-10">
@@ -156,7 +156,7 @@ export default function DashboardPage() {
               </p>
               <Rocket size={24} className="text-yellow-400" />
             </div>
-            <p className="text-4xl font-bold text-white">{displayBalance}</p>
+            <p className="text-4xl font-bold text-white">{balance}</p>
             <p className="text-xs text-white/50 mt-2">Available credits</p>
           </div>
         </motion.div>
@@ -169,7 +169,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="lg:col-span-2 bg-base border border-white/10 rounded-2xl p-6"
+          className="lg:col-span-2 bg-base border-2 border-white/2 rounded-2xl p-6"
         >
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-white">
@@ -203,7 +203,7 @@ export default function DashboardPage() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 + index * 0.05 }}
-                  className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 hover:border-white/20 transition-colors"
+                  className="flex items-center justify-between p-3 rounded-lg bg-white/5 border-2 border-white/2 hover:border-white/20 transition-colors"
                 >
                   <div className="flex items-center gap-3 min-w-0 flex-1">
                     <div className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0" />
@@ -239,7 +239,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-base border border-white/10 rounded-2xl p-6"
+          className="bg-base border-2 border-white/2 rounded-2xl p-6"
         >
           <h2 className="text-xl font-semibold text-white mb-6">
             Quick Actions
@@ -261,7 +261,7 @@ export default function DashboardPage() {
               Refill Credits
             </button>
 
-            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-white/5 text-white font-medium hover:bg-white/10 border border-white/10 transition-colors cursor-pointer">
+            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-white/5 text-white font-medium hover:bg-white/10 border-2 border-white/2 transition-colors cursor-pointer">
               <FileText size={20} />
               View Docs
             </button>
@@ -302,7 +302,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="mt-12 bg-base border border-white/10 rounded-2xl p-6"
+          className="mt-12 bg-base mb-24 border-2 border-white/2 rounded-2xl p-6"
         >
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-white">
@@ -322,7 +322,7 @@ export default function DashboardPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7 + index * 0.1 }}
-                  className="p-4 bg-white/5 border border-white/10 rounded-lg hover:border-white/20 hover:bg-white/10 transition-all cursor-pointer group"
+                  className="p-4 bg-white/5 border-2 border-white/2 rounded-lg hover:border-white/20 hover:bg-white/10 transition-all cursor-pointer group"
                 >
                   <div className="flex items-start justify-between mb-2">
                     <div>
@@ -349,7 +349,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="mt-12 text-center py-16 bg-base border border-white/10 rounded-2xl"
+          className="mt-12 text-center py-16 bg-base border-2 border-white/2 rounded-2xl"
         >
           <GithubLogo size={64} className="mx-auto mb-6 text-white/20" />
           <h2 className="text-2xl font-semibold text-white mb-2">

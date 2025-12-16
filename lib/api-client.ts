@@ -21,6 +21,22 @@ export const authApi = {
   },
 };
 
+// Users
+export const usersApi = {
+  getMe: async () => {
+    const response = await api.get("/users/me");
+    return response.data;
+  },
+  getSettings: async () => {
+    const response = await api.get("/users/settings");
+    return response.data;
+  },
+  updateSettings: async (settings: any) => {
+    const response = await api.put("/users/settings", { settings });
+    return response.data;
+  },
+};
+
 // Repositories
 export const reposApi = {
   list: async () => {

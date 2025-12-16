@@ -10,9 +10,6 @@ import {
   GithubLogo,
   CaretRight,
   MagnifyingGlass,
-  Trash,
-  Info,
-  FolderOpen,
 } from "@phosphor-icons/react";
 import { useReposStore } from "@/store/useReposStore";
 import { ConnectRepoModal } from "@/components/modals/ConnectRepoModal";
@@ -52,28 +49,29 @@ export default function ReposPage() {
   };
 
   return (
-    <div className="flex-1 p-8 overflow-y-auto bg-gradient-to-b from-[#181818] to-[#0f0f0f]">
-      {/* Header Section */}
+    <div className="flex-1 p-8 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-12"
+        className="mb-8"
       >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">Repositories</h1>
-            <p className="text-white/60 text-lg">
-              Manage {repos.length} connected repository
-              {repos.length !== 1 ? "ies" : ""}
+            <h1 className="text-3xl font-semibold text-white mb-2">
+              Repositories
+            </h1>
+            <p className="text-white/60">
+              {repos.length} repositor{repos.length !== 1 ? "ies" : "y"}{" "}
+              connected
             </p>
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-3 px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300"
+            className="flex items-center gap-1.5 px-4 py-3 bg-white text-black font-semibold rounded-lg text-sm hover:bg-white/90 transition-colors cursor-pointer"
           >
-            <Plus size={22} weight="bold" />
+            <Plus size={16} weight="bold" />
             Connect Repository
           </motion.button>
         </div>
@@ -81,169 +79,159 @@ export default function ReposPage() {
 
       {/* Search Bar */}
       {repos.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="mb-8 relative max-w-xl"
-        >
+        <div className="mb-6 relative max-w-md">
           <MagnifyingGlass
             size={20}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/40"
+            className="absolute left-3 top-3 text-white/40"
           />
           <input
             type="text"
             placeholder="Search repositories..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all duration-300"
+            className="w-full bg-base border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 transition-colors"
           />
-        </motion.div>
+        </div>
       )}
 
-      {/* Content Section */}
+      {/* Repos Grid */}
       {loading ? (
-        <div className="flex items-center justify-center py-20">
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-r-2 border-blue-500"></div>
-            <p className="text-white/60 mt-6 text-lg">
-              Loading repositories...
-            </p>
-          </div>
+        <div className="text-center py-16">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-r-2 border-white/20 border-t-white"></div>
+          <p className="text-white/60 mt-4">Loading repositories...</p>
         </div>
       ) : repos.length === 0 ? (
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="mt-16"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="mt-12 text-center"
         >
-          <div className="text-center py-20 px-8 rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent">
-            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-blue-500/20 mb-8">
-              <GithubLogo size={48} className="text-blue-400" weight="fill" />
-            </div>
-            <h2 className="text-3xl font-bold text-white mb-3">
-              No repositories yet
-            </h2>
-            <p className="text-white/60 max-w-md mx-auto mb-8 text-lg">
-              Connect your first GitHub repository to start automatically
-              generating professional documentation with AI
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setShowModal(true)}
-              className="inline-flex items-center gap-3 px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300"
-            >
-              <Plus size={22} weight="bold" />
-              Connect Your First Repository
-            </motion.button>
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/5 mb-6">
+            <GithubLogo size={40} className="text-white/40" />
           </div>
+          <h2 className="text-2xl font-semibold text-white mb-2">
+            No repositories connected
+          </h2>
+          <p className="text-white/60 mb-6">
+            Connect a repository to start generating documentation automatically
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setShowModal(true)}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 transition-colors cursor-pointer"
+          >
+            <Plus size={20} weight="bold" />
+            Connect Your First Repository
+          </motion.button>
         </motion.div>
       ) : (
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredRepos.map((repo, index) => (
             <motion.div
               key={repo._id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 hover:border-blue-500/30 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10"
+              className="group relative bg-base border border-white/10 hover:border-white/20 rounded-3xl p-6 overflow-hidden transition-all hover:shadow-xl hover:shadow-black/5"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/0 to-blue-500/0 group-hover:from-blue-500/5 group-hover:via-transparent group-hover:to-blue-500/5 transition-all duration-300" />
+              {/* Gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-              <div className="relative z-10 p-8">
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <GithubLogo
-                        size={28}
-                        className="text-blue-400"
-                        weight="fill"
-                      />
-                      <h3 className="text-2xl font-bold text-white group-hover:text-blue-200 transition-colors">
+              <div className="relative z-10 flex flex-col h-full">
+                {/* Header */}
+                <div className="mb-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h3 className="text-xl font-semibold text-white group-hover:text-white transition-colors">
                         {repo.name}
                       </h3>
+                      <p className="text-sm text-white/60">{repo.fullName}</p>
                     </div>
-                    <p className="text-white/60 text-sm ml-11 mb-4">
-                      {repo.fullName}
-                    </p>
-
-                    {/* Stats Row */}
-                    <div className="flex flex-wrap items-center gap-6 ml-11">
-                      <div className="flex items-center gap-2">
-                        <GitBranch size={16} className="text-white/40" />
-                        <span className="text-sm text-white/60">
-                          {repo.defaultBranch}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <FolderOpen size={16} className="text-white/40" />
-                        <span className="text-sm text-white/60">
-                          {repo.language || "Unknown"}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs px-3 py-1 bg-green-500/20 text-green-400 rounded-full font-medium">
-                          Active
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex items-center gap-3 ml-4">
-                    <Link href={`/app/repos/${repo._id}`}>
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="p-3 rounded-lg bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 transition-colors"
-                        title="View details"
-                      >
-                        <Info size={18} />
-                      </motion.button>
-                    </Link>
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => handleDisconnect(repo._id, repo.name)}
-                      disabled={disconnecting === repo._id}
-                      className="p-3 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors disabled:opacity-50"
-                      title="Disconnect repository"
-                    >
-                      {disconnecting === repo._id ? (
-                        <div className="inline-block animate-spin h-4 w-4">
-                          <div className="h-4 w-4 border-2 border-transparent border-t-red-400 rounded-full"></div>
-                        </div>
-                      ) : (
-                        <Trash size={18} />
-                      )}
-                    </motion.button>
+                    <div
+                      className={`w-3 h-3 rounded-full ${
+                        repo.isActive ? "bg-green-500" : "bg-yellow-500"
+                      }`}
+                    />
                   </div>
                 </div>
 
-                {/* Click to view */}
-                <Link
-                  href={`/app/repos/${repo._id}`}
-                  className="inline-flex items-center gap-2 mt-6 text-sm text-blue-400 hover:text-blue-300 transition-colors group/link"
-                >
-                  View project details
-                  <CaretRight
-                    size={16}
-                    className="group-hover/link:translate-x-1 transition-transform"
-                  />
-                </Link>
+                {/* Stats */}
+                <div className="space-y-3 mb-6 flex-1">
+                  <div className="flex items-center gap-2 text-sm text-white/70">
+                    <GitBranch size={16} className="text-white/50" />
+                    <span>{repo.defaultBranch}</span>
+                  </div>
+                  {repo.language && (
+                    <div className="flex items-center gap-2 text-sm text-white/70">
+                      <FireSimple size={16} className="text-white/50" />
+                      <span>{repo.language}</span>
+                    </div>
+                  )}
+                  {repo.lastProcessedAt && (
+                    <div className="flex items-center gap-2 text-sm text-white/70">
+                      <ClockClockwise size={16} className="text-white/50" />
+                      <span>
+                        {new Date(repo.lastProcessedAt).toLocaleDateString(
+                          "en-US",
+                          {
+                            month: "short",
+                            day: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          }
+                        )}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Status Badge */}
+                <div className="mb-4">
+                  <span
+                    className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                      repo.isActive
+                        ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                        : "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
+                    }`}
+                  >
+                    {repo.isActive ? "Active" : "Inactive"}
+                  </span>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-3 pt-4 border-t border-white/10">
+                  <Link href={`/app/repos/${repo._id}`} className="flex-1">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-white text-black font-medium rounded-full hover:bg-white/90 transition-colors cursor-pointer"
+                    >
+                      <span>View</span>
+                      {/* <CaretRight size={16} /> */}
+                    </motion.button>
+                  </Link>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleDisconnect(repo._id, repo.name)}
+                    disabled={disconnecting === repo._id}
+                    className="px-4 py-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/30 font-medium rounded-full transition-colors cursor-pointer disabled:opacity-50 text-sm"
+                  >
+                    {disconnecting === repo._id ? "..." : "Disconnect"}
+                  </motion.button>
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
       )}
 
-      {/* Modal */}
-      {showModal && (
-        <ConnectRepoModal
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-        />
-      )}
+      {/* Connect Repo Modal */}
+      <ConnectRepoModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </div>
   );
 }

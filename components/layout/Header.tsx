@@ -55,7 +55,7 @@ export function Header() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => setShowDropdown(!showDropdown)}
-          className="flex items-center gap-3 px-4 py-2 bg-base border border-white/10 hover:border-white/20 rounded-lg text-white transition-all cursor-pointer"
+          className="flex items-center gap-2 px-3 py-2 bg-base border-2 border-white/2 hover:border-white/10 rounded-lg text-white transition-all cursor-pointer"
         >
           <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden">
             <img
@@ -64,9 +64,9 @@ export function Header() {
               className="w-full h-full object-cover"
             />
           </div>
-          <span className="font-medium text-sm">
+          {/* <span className="font-medium text-sm">
             {user?.name || user?.email}
-          </span>
+          </span> */}
           <CaretDown size={16} className="text-white/50" weight="bold" />
         </motion.button>
 
@@ -75,13 +75,13 @@ export function Header() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute right-0 top-full mt-2 bg-base border border-white/10 rounded-lg shadow-xl min-w-[250px] overflow-hidden z-50"
+            className="absolute right-0 top-full mt-2 bg-base border-2 border-white/2 rounded-lg shadow-xl min-w-[250px] overflow-hidden z-50"
           >
             {/* User Info */}
-            <div className="px-4 py-3 border-b border-white/10">
+            {/* <div className="px-4 py-3 border-b border-white/10">
               <p className="text-sm font-medium text-white">{user?.name}</p>
               <p className="text-xs text-white/50">{user?.email}</p>
-            </div>
+            </div> */}
 
             {/* Menu Items */}
             <Link href="/app/settings" className="block">
@@ -97,7 +97,7 @@ export function Header() {
             {/* Logout */}
             <button
               onClick={handleLogout}
-              className="w-full text-left px-4 py-3 text-red-400 hover:bg-red-500/10 transition-colors border-t border-white/10 flex items-center gap-3 text-sm"
+              className="w-full text-left px-4 py-3 text-red-400 hover:bg-red-500/10 transition-colors border-t-2 border-white/2 flex items-center gap-3 text-sm"
             >
               <SignOut size={16} />
               Sign Out

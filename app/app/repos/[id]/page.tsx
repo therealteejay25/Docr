@@ -11,6 +11,7 @@ import {
   ToggleRight,
   ToggleLeft,
   Gear,
+  CoinsIcon,
 } from "@phosphor-icons/react";
 import { useReposStore } from "@/store/useReposStore";
 import { useCreditsStore } from "@/store/useCreditsStore";
@@ -161,38 +162,38 @@ export default function RepoDetailPage() {
 
         {/* Stats Row */}
         <div className="grid grid-cols-4 gap-4 mb-8">
-          <div className="bg-base border border-white/10 rounded-lg p-4">
+          <div className="bg-base border-2 border-white/2 rounded-2xl p-4">
             <div className="flex items-center justify-between mb-2">
               <p className="text-white/60 text-sm">Total Commits</p>
               <GitCommit size={20} className="text-white/40" />
             </div>
             <p className="text-2xl font-semibold text-white">{stats.commits}</p>
           </div>
-          <div className="bg-base border border-white/10 rounded-lg p-4">
+          <div className="bg-base border-2 border-white/2 rounded-2xl p-4">
             <div className="flex items-center justify-between mb-2">
               <p className="text-white/60 text-sm">Completed Jobs</p>
               <CheckCircle size={20} className="text-green-500" weight="fill" />
             </div>
             <p className="text-2xl font-semibold text-white">{stats.edits}</p>
           </div>
-          <div className="bg-base border border-white/10 rounded-lg p-4">
+          <div className="bg-base border-2 border-white/2 rounded-2xl p-4">
             <div className="flex items-center justify-between mb-2">
               <p className="text-white/60 text-sm">Failed Jobs</p>
               <Warning size={20} className="text-red-500" weight="fill" />
             </div>
             <p className="text-2xl font-semibold text-white">{stats.failed}</p>
           </div>
-          <div className="bg-base border border-white/10 rounded-lg p-4">
+          <div className="bg-base border-2 border-white/2 rounded-2xl p-4">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-white/60 text-sm">Credits Balance</p>
-              <Stack size={20} className="text-blue-400" />
+              <p className="text-white/60 text-sm">Credits Used</p>
+              <CoinsIcon size={20} className="text-white/50" />
             </div>
             <p className="text-2xl font-semibold text-white">{balance}</p>
           </div>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-6 border-b border-white/10">
+        <div className="flex gap-6 pt-4 px-4 bg-base rounded-xl">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -230,7 +231,7 @@ export default function RepoDetailPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="bg-base border border-white/10 rounded-2xl p-6"
+                className="bg-base border-2 border-white/2 rounded-2xl p-6"
               >
                 <h3 className="text-lg font-semibold text-white mb-4">
                   Repository Info
@@ -289,7 +290,7 @@ export default function RepoDetailPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-base border border-white/10 rounded-2xl p-6"
+                className="bg-base border-2 border-white/2 rounded-2xl p-6"
               >
                 <h3 className="text-lg font-semibold text-white mb-4">
                   Documentation Types
@@ -321,7 +322,7 @@ export default function RepoDetailPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="bg-base border border-white/10 rounded-2xl p-6"
+              className="bg-base border-2 mb-24 border-white/2 rounded-2xl p-6"
             >
               <h3 className="text-lg font-semibold text-white mb-4">
                 Recent Activity
@@ -336,7 +337,7 @@ export default function RepoDetailPage() {
                   {jobs.slice(0, 5).map((job) => (
                     <div
                       key={job._id}
-                      className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10"
+                      className="flex items-center justify-between p-4 bg-white/5 rounded-lg border-2 border-white/2"
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         {getStatusIcon(job.status)}
@@ -376,7 +377,7 @@ export default function RepoDetailPage() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-base border border-white/10 rounded-2xl p-6"
+            className="bg-base mb-24 border-2 border-white/2 rounded-2xl p-6"
           >
             <h3 className="text-lg font-semibold text-white mb-6">
               Job History
@@ -399,7 +400,7 @@ export default function RepoDetailPage() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.02 }}
-                    className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10 hover:border-white/20 transition-colors"
+                    className="flex items-center justify-between p-4 bg-white/5 rounded-lg border-2 border-white/2 hover:border-white/20 transition-colors"
                   >
                     <div className="flex items-center gap-3 min-w-0 flex-1">
                       {getStatusIcon(job.status)}
@@ -453,7 +454,7 @@ export default function RepoDetailPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="bg-base border border-white/10 rounded-2xl p-6"
+              className="bg-base border-2 border-white/2 rounded-2xl p-6"
             >
               <div className="flex items-center justify-between">
                 <div>
@@ -487,7 +488,7 @@ export default function RepoDetailPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-base border border-white/10 rounded-2xl p-6"
+              className="bg-base border-2 border-white/2 rounded-2xl p-6"
             >
               <h3 className="text-lg font-semibold text-white mb-4">
                 Documentation Types
@@ -497,7 +498,7 @@ export default function RepoDetailPage() {
                   ([type, enabled]) => (
                     <div
                       key={type}
-                      className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10"
+                      className="flex items-center justify-between p-4 bg-white/5 rounded-xl border-2 border-white/2"
                     >
                       <div>
                         <p className="text-white font-medium capitalize">
@@ -527,7 +528,7 @@ export default function RepoDetailPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="bg-base border border-white/10 rounded-2xl p-6"
+              className="bg-base border-2 border-white/2 rounded-2xl p-6"
             >
               <div className="flex items-center justify-between">
                 <div>
@@ -553,7 +554,7 @@ export default function RepoDetailPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="bg-red-500/10 border border-red-500/30 rounded-2xl p-6"
+              className="bg-red-500/10 border-2 mb-24 border-red-500/30 rounded-2xl p-6"
             >
               <h3 className="text-lg font-semibold text-red-400 mb-4">
                 Danger Zone

@@ -73,7 +73,7 @@ export function ConnectRepoModal({ isOpen, onClose }: ConnectRepoModalProps) {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-base border border-white/10 rounded-2xl w-full max-w-lg max-h-[80vh] overflow-hidden flex flex-col"
+            className="bg-base border-2 border-white/2 rounded-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-white/10">
@@ -105,7 +105,7 @@ export function ConnectRepoModal({ isOpen, onClose }: ConnectRepoModalProps) {
                   placeholder="Search repositories..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 transition-colors"
+                  className="w-full bg-white/5 border-2 border-white/2 rounded-lg pl-10 pr-4 py-2 text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 transition-colors"
                   autoFocus
                 />
               </div>
@@ -162,7 +162,7 @@ export function ConnectRepoModal({ isOpen, onClose }: ConnectRepoModalProps) {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 hover:border-white/20 transition-all group"
+                      className="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-lg border-2 border-white/2 hover:border-white/20 transition-all group"
                     >
                       <div className="min-w-0 flex-1">
                         <p className="font-medium text-white truncate">
