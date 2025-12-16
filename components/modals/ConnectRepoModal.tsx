@@ -162,7 +162,7 @@ export function ConnectRepoModal({ isOpen, onClose }: ConnectRepoModalProps) {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-lg border-2 border-white/2 hover:border-white/20 transition-all group"
+                      className="flex items-center justify-between p-4 bg-white/5 hover:bg-white/7 rounded-lg border-2 border-white/2 hover:border-white/20 transition-all group"
                     >
                       <div className="min-w-0 flex-1">
                         <p className="font-medium text-white truncate">
