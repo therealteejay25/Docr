@@ -1,29 +1,11 @@
-# docr
+# therealteejay25/Docr
 
-therealteejay25/Docr
+docs: Created README.md with project overview
+
+## About
+
+This project was documented by Docr.
 
 ## Getting Started
 
-This project is built with TypeScript.
-
-## Installation
-
-Run: npm install
-
-## Usage
-
-Run: npm run start
-
-## Features
-
-- Core functionality
-- Well-documented
-- Easy to use
-
-## Contributing
-
-Contributions are welcome!
-
-## License
-
-MIT
+See the main branch for usage instructions.
