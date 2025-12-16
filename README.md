@@ -1,6 +1,6 @@
 # therealteejay25/Docr
 
-mdcomox
+docs: Updated documentation based on recent changes
 
 ## About
 
