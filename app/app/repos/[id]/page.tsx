@@ -377,7 +377,7 @@ export default function RepoDetailPage() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-base mb-24 border-2 border-white/2 rounded-2xl p-6"
+            className="bg-base mb-25 border-2 border-white/2 rounded-2xl p-6"
           >
             <h3 className="text-lg font-semibold text-white mb-6">
               Job History
