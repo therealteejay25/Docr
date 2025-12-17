@@ -32,6 +32,7 @@ export default function ProjectPage() {
   const { balance, fetchBalance } = useCreditsStore();
   const [activeTab, setActiveTab] = useState("overview");
   const [jobs, setJobs] = useState<any[]>([]);
+  const [liveEvents, setLiveEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const repo = repos.find((r) => r._id === params.id);
@@ -45,6 +46,35 @@ export default function ProjectPage() {
     if (repo) {
       loadJobs();
     }
+  }, [repo]);
+
+  // Subscribe to server-sent events for realtime updates
+  useEffect(() => {
+    if (!repo) return;
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
+    const es = new EventSource(
+      `${apiBase}/api/${process.env.NEXT_PUBLIC_API_VERSION || "v1"}/events/${
+        repo._id
+      }`
+    );
+
+    es.onmessage = (e) => {
+      try {
+        const data = JSON.parse(e.data);
+        setLiveEvents((prev) => [data, ...prev].slice(0, 50));
+      } catch (err) {
+        console.error("Failed to parse SSE message", err);
+      }
+    };
+
+    es.onerror = (err) => {
+      console.warn("SSE error", err);
+      es.close();
+    };
+
+    return () => {
+      es.close();
+    };
   }, [repo]);
 
   const loadJobs = async () => {
@@ -252,6 +282,44 @@ export default function ProjectPage() {
                 </div>
               </div>
             </motion.div>
+            {/* Live Events Feed */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-base border border-white/10 rounded-2xl p-6 mt-6"
+            >
+              <h2 className="text-lg font-semibold text-white mb-4">
+                Live Activity
+              </h2>
+              {liveEvents.length === 0 ? (
+                <p className="text-white/60">No live events</p>
+              ) : (
+                <div className="space-y-2">
+                  {liveEvents.map((ev, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-3 h-3 rounded-full bg-blue-400 animate-pulse" />
+                        <div>
+                          <p className="text-white text-sm">{ev.type}</p>
+                          <p className="text-xs text-white/50">
+                            {ev.summary ||
+                              ev.commitSha ||
+                              (ev.files && ev.files.join(", "))}
+                          </p>
+                        </div>
+                      </div>
+                      <span className="text-xs text-white/50">
+                        {new Date(ev.timestamp).toLocaleTimeString()}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -293,7 +361,8 @@ export default function ProjectPage() {
                         )}
                         <div>
                           <p className="text-white font-medium capitalize">
-                            {job.jobType.replace(/_/g, " ")}
+                            {job.output?.aiSummary ||
+                              job.jobType.replace(/_/g, " ")}
                           </p>
                           <p className="text-xs text-white/50">
                             {new Date(job.createdAt).toLocaleDateString(

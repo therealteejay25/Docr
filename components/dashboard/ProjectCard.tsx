@@ -8,6 +8,8 @@ import { Repo } from "@/store/useReposStore";
 interface ProjectCardProps {
   repo: Repo;
   index: number;
+  liveEvent?: any;
+  lastSummary?: string | null;
 }
 
 export function ProjectCard({ repo, index }: ProjectCardProps) {
@@ -21,7 +23,21 @@ export function ProjectCard({ repo, index }: ProjectCardProps) {
       whileHover={{ scale: 1.02, y: -5 }}
       className="bg-[#1E1E1E] border border-[#333] rounded-2xl p-6 flex flex-col gap-4"
     >
-      <h3 className="text-xl font-semibold text-white">{repo.name}</h3>
+      <div className="flex items-start justify-between">
+        <h3 className="text-xl font-semibold text-white">{repo.name}</h3>
+        {repo.lastProcessedCommit && (
+          <div className="ml-3 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-xs text-white/60">Live</span>
+          </div>
+        )}
+      </div>
+
+      {repo.lastProcessedSummary && (
+        <p className="text-sm text-gray-300 line-clamp-2">
+          {repo.lastProcessedSummary}
+        </p>
+      )}
 
       <div className="space-y-2">
         <div className="flex items-center gap-2 text-gray-400 text-sm">

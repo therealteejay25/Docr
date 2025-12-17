@@ -17,6 +17,7 @@ import Link from "next/link";
 
 export default function ReposPage() {
   const { repos, fetchRepos, disconnectRepo, loading } = useReposStore();
+  const [repoEvents, setRepoEvents] = useState<Record<string, any>>({});
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [disconnecting, setDisconnecting] = useState<string | null>(null);
@@ -24,6 +25,45 @@ export default function ReposPage() {
   useEffect(() => {
     fetchRepos();
   }, [fetchRepos]);
+
+  // Subscribe to SSE channels for each repo to display live backend events
+  useEffect(() => {
+    if (!repos || repos.length === 0) return;
+
+    const sources: Record<string, EventSource> = {};
+
+    repos.forEach((r) => {
+      try {
+        const apiBase =
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
+        const es = new EventSource(
+          `${apiBase}/api/${
+            process.env.NEXT_PUBLIC_API_VERSION || "v1"
+          }/events/${r._id}`
+        );
+        es.onmessage = (e) => {
+          try {
+            const data = JSON.parse(e.data);
+            setRepoEvents((prev) => ({ ...prev, [r._id]: data }));
+          } catch (err) {
+            console.error("Failed to parse SSE message for repo", r._id, err);
+          }
+        };
+        es.onerror = () => {
+          try {
+            es.close();
+          } catch {}
+        };
+        sources[r._id] = es;
+      } catch (err) {
+        console.warn("Failed to open SSE for repo", r._id, err);
+      }
+    });
+
+    return () => {
+      Object.values(sources).forEach((s) => s.close());
+    };
+  }, [repos]);
 
   const filteredRepos = repos.filter(
     (repo) =>
@@ -148,11 +188,18 @@ export default function ReposPage() {
                       </h3>
                       <p className="text-sm text-white/60">{repo.fullName}</p>
                     </div>
-                    <div
-                      className={`w-3 h-3 rounded-full ${
-                        repo.isActive ? "bg-green-500" : "bg-yellow-500"
-                      }`}
-                    />
+                    <div className="flex items-center gap-3">
+                      {repo.lastProcessedCommit && (
+                        <div className="text-xs text-white/60">
+                          {repo.lastProcessedSummary || "Docs updated"}
+                        </div>
+                      )}
+                      <div
+                        className={`w-3 h-3 rounded-full ${
+                          repo.isActive ? "bg-green-500" : "bg-yellow-500"
+                        }`}
+                      />
+                    </div>
                   </div>
                 </div>
 
