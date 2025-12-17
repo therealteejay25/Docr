@@ -1,3 +1,3 @@
 # therealteejay25/Docr
 
-Auto-generated README (fallback)
+Auto-generated README (error)
