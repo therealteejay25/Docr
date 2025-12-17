@@ -47,6 +47,10 @@ export const reposApi = {
     const response = await api.get("/repos");
     return response.data;
   },
+  get: async (repoId: string) => {
+    const response = await api.get(`/repos/${repoId}`);
+    return response.data;
+  },
   connect: async (data: { repoId: number; owner: string; name: string }) => {
     const response = await api.post("/repos/connect", data);
     return response.data;

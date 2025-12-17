@@ -15,7 +15,7 @@ import {
 } from "@phosphor-icons/react";
 import { useReposStore } from "@/store/useReposStore";
 import { useCreditsStore } from "@/store/useCreditsStore";
-import { jobsApi } from "@/lib/api-client";
+import { jobsApi, reposApi } from "@/lib/api-client";
 import Link from "next/link";
 
 const tabs = [
@@ -35,12 +35,33 @@ export default function ProjectPage() {
   const [liveEvents, setLiveEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const repo = repos.find((r) => r._id === params.id);
+  const storeRepo = repos.find((r) => r._id === params.id);
+  const [repo, setRepo] = useState<any | null>(storeRepo || null);
 
   useEffect(() => {
     fetchRepos();
     fetchBalance();
   }, [fetchRepos, fetchBalance]);
+
+  useEffect(() => {
+    let mounted = true;
+    const fetchRepo = async () => {
+      if (!repo && params?.id) {
+        try {
+          const data = await reposApi.get(params.id);
+          if (mounted) setRepo(data.repo || null);
+        } catch (e) {
+          console.error("Failed to fetch repo from backend:", e);
+        }
+      }
+    };
+
+    fetchRepo();
+
+    return () => {
+      mounted = false;
+    };
+  }, [params?.id, repo]);
 
   useEffect(() => {
     if (repo) {

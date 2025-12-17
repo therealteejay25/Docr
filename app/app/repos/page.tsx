@@ -191,7 +191,7 @@ export default function ReposPage() {
                     <div className="flex items-center gap-3">
                       {repo.lastProcessedCommit && (
                         <div className="text-xs text-white/60">
-                          {repo.lastProcessedSummary || "Docs updated"}
+                          {repo.lastProcessedAt || "Docs updated"}
                         </div>
                       )}
                       <div
@@ -248,7 +248,7 @@ export default function ReposPage() {
 
                 {/* Actions */}
                 <div className="flex gap-3 pt-4 border-t border-white/10">
-                  <Link href={`/app/repos/${repo._id}`} className="flex-1">
+                  <Link href={`/app/project/${repo._id}`} className="flex-1">
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}

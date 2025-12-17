@@ -67,7 +67,7 @@ export function ProjectCard({ repo, index }: ProjectCardProps) {
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        onClick={() => router.push(`/dashboard/project/${repo._id}`)}
+        onClick={() => router.push(`/app/repos/${repo._id}`)}
         className="mt-auto bg-white text-[#1E1E1E] rounded-lg py-3 font-medium hover:bg-white transition-colors"
       >
         View Project

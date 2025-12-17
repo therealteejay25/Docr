@@ -268,7 +268,9 @@ export default function SettingsPage() {
               <button className="w-full flex items-center justify-between p-4 bg-white/5 hover:bg-white/10 rounded-xl transition-colors group">
                 <div className="text-left">
                   <p className="font-medium text-white">Subscription Plan</p>
-                  <p className="text-sm text-white/60">Current: Pro Plan</p>
+                  <p className="text-sm text-white/60">
+                    Current: {(settings as any).subscriptionPlan || "Unknown"}
+                  </p>
                 </div>
                 <CaretRight
                   size={20}
