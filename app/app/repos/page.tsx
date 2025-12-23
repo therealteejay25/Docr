@@ -153,7 +153,7 @@ export default function ReposPage() {
 
       {/* Repos Grid */}
       {loading ? (
-        <div className="text-center py-16">
+        <div className="text-center py-15">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-r-2 border-white/20 border-t-white"></div>
           <p className="text-white/60 mt-4">Loading repositories...</p>
         </div>
