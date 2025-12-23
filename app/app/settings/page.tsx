@@ -31,11 +31,27 @@ export default function SettingsPage() {
     autoGenerate: true,
     slackIntegration: false,
   });
+  const [plan, setPlan] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     loadSettings();
+  }, []);
+
+  useEffect(() => {
+    // Load full user profile (for subscription/plan data)
+    (async () => {
+      try {
+        const me = await usersApi.getMe();
+        // if backend returns plan/subscription info, merge it into UI
+        if (me && (me.plan || me.subscription)) {
+          setPlan(me.plan || me.subscription?.plan || "Free");
+        }
+      } catch (e) {
+        // ignore
+      }
+    })();
   }, []);
 
   const loadSettings = async () => {
@@ -269,7 +285,7 @@ export default function SettingsPage() {
                 <div className="text-left">
                   <p className="font-medium text-white">Subscription Plan</p>
                   <p className="text-sm text-white/60">
-                    Current: {(settings as any).subscriptionPlan || "Unknown"}
+                    Current: {plan || "Free"}
                   </p>
                 </div>
                 <CaretRight

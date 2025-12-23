@@ -12,19 +12,39 @@ import {
   MagnifyingGlass,
 } from "@phosphor-icons/react";
 import { useReposStore } from "@/store/useReposStore";
+import { reposApi } from "@/lib/api-client";
 import { ConnectRepoModal } from "@/components/modals/ConnectRepoModal";
 import Link from "next/link";
 
 export default function ReposPage() {
-  const { repos, fetchRepos, disconnectRepo, loading } = useReposStore();
+  // We'll drive this page directly from the backend so UI only shows backend-provided data
+  const { fetchRepos: _fetchStoreRepos } = useReposStore();
+  const [repos, setRepos] = useState<any[]>([]);
   const [repoEvents, setRepoEvents] = useState<Record<string, any>>({});
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [disconnecting, setDisconnecting] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // keep the global store in sync too
+    _fetchStoreRepos().catch(() => {});
     fetchRepos();
-  }, [fetchRepos]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchRepos = async () => {
+    setLoading(true);
+    try {
+      const data = await reposApi.getConnected();
+      setRepos(data.repos || []);
+    } catch (error) {
+      console.error("Failed to fetch repos:", error);
+      setRepos([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Subscribe to SSE channels for each repo to display live backend events
   useEffect(() => {
@@ -34,13 +54,8 @@ export default function ReposPage() {
 
     repos.forEach((r) => {
       try {
-        const apiBase =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
-        const es = new EventSource(
-          `${apiBase}/api/${
-            process.env.NEXT_PUBLIC_API_VERSION || "v1"
-          }/events/${r._id}`
-        );
+        const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
+        const es = new EventSource(`${apiBase}/api/${process.env.NEXT_PUBLIC_API_VERSION || "v1"}/events/${r._id}`);
         es.onmessage = (e) => {
           try {
             const data = JSON.parse(e.data);
@@ -79,7 +94,9 @@ export default function ReposPage() {
     ) {
       setDisconnecting(repoId);
       try {
-        await disconnectRepo(repoId);
+        await reposApi.disconnect(repoId);
+        // remove locally
+        setRepos((s) => s.filter((r) => r._id !== repoId));
       } catch (error) {
         console.error("Failed to disconnect:", error);
       } finally {
@@ -191,7 +208,7 @@ export default function ReposPage() {
                     <div className="flex items-center gap-3">
                       {repo.lastProcessedCommit && (
                         <div className="text-xs text-white/60">
-                          {repo.lastProcessedAt || "Docs updated"}
+                          {repo.lastProcessedSummary || "Docs updated"}
                         </div>
                       )}
                       <div
@@ -248,7 +265,7 @@ export default function ReposPage() {
 
                 {/* Actions */}
                 <div className="flex gap-3 pt-4 border-t border-white/10">
-                  <Link href={`/app/project/${repo._id}`} className="flex-1">
+                  <Link href={`/app/repos/${repo._id}`} className="flex-1">
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}

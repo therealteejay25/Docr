@@ -15,7 +15,8 @@ import {
 } from "@phosphor-icons/react";
 import { useReposStore } from "@/store/useReposStore";
 import { useCreditsStore } from "@/store/useCreditsStore";
-import { jobsApi, reposApi } from "@/lib/api-client";
+import { jobsApi } from "@/lib/api-client";
+import { reposApi } from "@/lib/api-client";
 import Link from "next/link";
 
 const tabs = [
@@ -28,40 +29,25 @@ const tabs = [
 export default function ProjectPage() {
   const params = useParams();
   const router = useRouter();
-  const { repos, fetchRepos } = useReposStore();
+  const { fetchRepos } = useReposStore();
   const { balance, fetchBalance } = useCreditsStore();
   const [activeTab, setActiveTab] = useState("overview");
   const [jobs, setJobs] = useState<any[]>([]);
   const [liveEvents, setLiveEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const storeRepo = repos.find((r) => r._id === params.id);
-  const [repo, setRepo] = useState<any | null>(storeRepo || null);
+  const [repo, setRepo] = useState<any | null>(null);
+
 
   useEffect(() => {
-    fetchRepos();
-    fetchBalance();
-  }, [fetchRepos, fetchBalance]);
-
-  useEffect(() => {
-    let mounted = true;
-    const fetchRepo = async () => {
-      if (!repo && params?.id) {
-        try {
-          const data = await reposApi.get(params.id);
-          if (mounted) setRepo(data.repo || null);
-        } catch (e) {
-          console.error("Failed to fetch repo from backend:", e);
-        }
-      }
-    };
-
-    fetchRepo();
-
-    return () => {
-      mounted = false;
-    };
-  }, [params?.id, repo]);
+    // Fetch repo details and balance
+    (async () => {
+      fetchRepos().catch(() => {});
+      fetchBalance().catch(() => {});
+      await loadRepo();
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (repo) {
@@ -106,6 +92,20 @@ export default function ProjectPage() {
       setJobs(data.jobs || []);
     } catch (error) {
       console.error("Failed to load jobs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadRepo = async () => {
+    try {
+      setLoading(true);
+      const data = await reposApi.get(params.id as string);
+      // backend may return { repo } or the repo directly
+      setRepo(data.repo || data);
+    } catch (error) {
+      console.error("Failed to load repo:", error);
+      setRepo(null);
     } finally {
       setLoading(false);
     }
