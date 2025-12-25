@@ -126,7 +126,7 @@ export default function ReposPage() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-1.5 px-4 py-3 bg-white text-black font-semibold rounded-lg text-sm hover:bg-white/80 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-3 bg-white text-black font-semibold rounded-lg text-sm hover:bg-white/90 transition-colors cursor-pointer"
           >
             <Plus size={16} weight="bold" />
             Connect Repository
