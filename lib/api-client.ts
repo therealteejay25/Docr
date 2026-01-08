@@ -44,7 +44,7 @@ export const reposApi = {
     return response.data;
   },
   getConnected: async () => {
-    const response = await api.get("/repos");
+    const response = await api.get("/list");
     return response.data;
   },
   get: async (repoId: string) => {
@@ -60,7 +60,7 @@ export const reposApi = {
     return response.data;
   },
   updateSettings: async (repoId: string, settings: any) => {
-    const response = await api.patch(`/repos/${repoId}/settings`, { settings });
+    const response = await api.patch(`/repos/${repoId}/setting`, { settings });
     return response.data;
   },
 };

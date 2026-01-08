@@ -61,8 +61,13 @@ export default function ReposPage() {
 
     repos.forEach((r) => {
       try {
-        const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
-        const es = new EventSource(`${apiBase}/api/${process.env.NEXT_PUBLIC_API_VERSION || "v1"}/events/${r._id}`);
+        const apiBase =
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
+        const es = new EventSource(
+          `${apiBase}/api/${
+            process.env.NEXT_PUBLIC_API_VERSION || "v1"
+          }/events/${r._id}`
+        );
         es.onmessage = (e) => {
           try {
             const data = JSON.parse(e.data);
