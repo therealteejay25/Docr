@@ -36,10 +36,17 @@ export default function ReposPage() {
   const fetchRepos = async () => {
     setLoading(true);
     try {
+      console.log("Fetching repos from backend...");
       const data = await reposApi.getConnected();
+      console.log("Backend response:", data);
       setRepos(data.repos || []);
-    } catch (error) {
+      if (!data.repos || data.repos.length === 0) {
+        console.warn("No repos returned from backend");
+      }
+    } catch (error: any) {
       console.error("Failed to fetch repos:", error);
+      console.error("Error status:", error.response?.status);
+      console.error("Error data:", error.response?.data);
       setRepos([]);
     } finally {
       setLoading(false);
