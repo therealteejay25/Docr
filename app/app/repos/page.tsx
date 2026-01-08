@@ -45,8 +45,9 @@ export default function ReposPage() {
       }
     } catch (error: any) {
       console.error("Failed to fetch repos:", error);
-      console.error("Error status:", error.response?.status);
-      console.error("Error data:", error.response?.data);
+      console.error("Error status:", error?.response?.status);
+      console.error("Error data:", error?.response?.data);
+      console.error("Error message:", error?.message);
       setRepos([]);
     } finally {
       setLoading(false);
@@ -62,7 +63,7 @@ export default function ReposPage() {
     repos.forEach((r) => {
       try {
         const apiBase =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
         const es = new EventSource(
           `${apiBase}/api/${
             process.env.NEXT_PUBLIC_API_VERSION || "v1"

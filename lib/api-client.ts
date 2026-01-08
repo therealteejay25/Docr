@@ -4,7 +4,7 @@ import api from "./api";
 export const authApi = {
   githubLogin: () => {
     window.location.href = `${
-      process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000"
+      process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
     }/api/${process.env.NEXT_PUBLIC_API_VERSION || "v1"}/auth/github`;
   },
   refreshToken: async (refreshToken: string) => {
@@ -44,7 +44,7 @@ export const reposApi = {
     return response.data;
   },
   getConnected: async () => {
-    const response = await api.get("/list");
+    const response = await api.get("/repos");
     return response.data;
   },
   get: async (repoId: string) => {
@@ -118,7 +118,7 @@ export const aiApi = {
   ) => {
     const token = localStorage.getItem("accessToken");
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000"}/api/${
+      `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/api/${
         process.env.NEXT_PUBLIC_API_VERSION || "v1"
       }/ai/chat/stream`,
       {

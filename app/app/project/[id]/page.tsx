@@ -38,7 +38,6 @@ export default function ProjectPage() {
 
   const [repo, setRepo] = useState<any | null>(null);
 
-
   useEffect(() => {
     // Fetch repo details and balance
     (async () => {
@@ -58,7 +57,7 @@ export default function ProjectPage() {
   // Subscribe to server-sent events for realtime updates
   useEffect(() => {
     if (!repo) return;
-    const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:9000";
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
     const es = new EventSource(
       `${apiBase}/api/${process.env.NEXT_PUBLIC_API_VERSION || "v1"}/events/${
         repo._id
