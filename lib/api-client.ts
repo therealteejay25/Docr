@@ -3,9 +3,12 @@ import api from "./api";
 // Auth
 export const authApi = {
   githubLogin: () => {
+    const callbackUrl = `${
+      typeof window !== "undefined" ? window.location.origin : ""
+    }/auth/callback`;
     window.location.href = `${
       process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
-    }/api/${process.env.NEXT_PUBLIC_API_VERSION || "v1"}/auth/github`;
+    }/api/${process.env.NEXT_PUBLIC_API_VERSION || "v1"}/auth/github?redirect=${encodeURIComponent(callbackUrl)}`;
   },
   refreshToken: async (refreshToken: string) => {
     const response = await api.post("/auth/refresh", { refreshToken });
