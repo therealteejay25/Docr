@@ -3,15 +3,6 @@ import axios from "axios";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 const API_VERSION = process.env.NEXT_PUBLIC_API_VERSION || "v1";
 
-// Log the API configuration for debugging
-if (typeof window !== "undefined") {
-  console.log("API Configuration:", {
-    baseURL: `${API_BASE_URL}/api/${API_VERSION}`,
-    API_BASE_URL,
-    API_VERSION,
-  });
-}
-
 const api = axios.create({
   baseURL: `${API_BASE_URL}/api/${API_VERSION}`,
   headers: {
